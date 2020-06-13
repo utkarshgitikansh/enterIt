@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "375479882469",
+    "firebase_url": "https://enterit-077.firebaseio.com",
+    "project_id": "enterit-077",
+    "storage_bucket": "enterit-077.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375479882469:android:14bbbbd8186c3eb9537a0c",
+        "android_client_info": {
+          "package_name": "com.gitikansh.enterit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375479882469-1q0bgtu9qpl0p80tm1hbgjcc0k45ru8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu2_UGvgsatdChpUb1uLCbl5VTd3cPF98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375479882469-1q0bgtu9qpl0p80tm1hbgjcc0k45ru8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
