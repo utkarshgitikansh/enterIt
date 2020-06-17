@@ -17,13 +17,14 @@ class _InCardState extends State<InCard> {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
+        color: Colors.brown,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
              ListTile(
-              leading: Icon(Icons.assignment_turned_in),
-              title: Text(widget.item_title.toString()),
-              subtitle: Text(widget.item_subtitle.toString()),
+              leading: Icon(Icons.assignment_turned_in,  color: Colors.brown.shade200),
+              title: Text(widget.item_title.toString(), style: TextStyle(color: Colors.brown.shade200),),
+              subtitle: Text(widget.item_subtitle.toString(), style: TextStyle(color: Colors.brown.shade200)),
             ),
 //            ButtonBar(
 //              children: <Widget>[
@@ -39,7 +40,6 @@ class _InCardState extends State<InCard> {
 //            ),
           ],
         ),
-
       ),
     );
   }

@@ -1,26 +1,17 @@
 import 'dart:io';
 
 import 'package:enterit/Model/card.dart';
-import 'package:enterit/invent.dart';
 import 'package:enterit/main.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:enterit/Model/globals.dart' as globals;
-import 'package:fluttertoast/fluttertoast.dart';
 
-
-class AddForm extends StatefulWidget {
-
-  String value;
-
-  AddForm({Key key, this.value}) : super (key : key);
-
+class Test extends StatefulWidget {
   @override
-  _AddFormState createState() => _AddFormState();
+  _TestState createState() => _TestState();
 }
 
-class _AddFormState extends State<AddForm> {
+class _TestState extends State<Test> {
 
   TabController controller;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -48,30 +39,21 @@ class _AddFormState extends State<AddForm> {
   bool _form1 = false;
   bool _form2 = false;
   bool _form3 = false;
-  
-  String user = globals.isLoggedIn;
-
 
   @override
   void initState() {
 
-    print(user);
-
     // ignore: invalid_use_of_protected_member
     (context as Element).reassemble();
 
-    Firestore.instance.collection(user).snapshots().listen((data) =>
+    Firestore.instance.collection('inventory').snapshots().listen((data) =>
         data.documents.forEach((doc) => inventItems.add(doc.documentID)));
-
 
 //    getInvent();
     Future<List> _invent = Future<List>.delayed(
       Duration(seconds: 0),
           () => inventItems,
     );
-
-
-
 
     print('init state');
     super.initState();
@@ -96,7 +78,7 @@ class _AddFormState extends State<AddForm> {
     items.remove("New item ..");
 
     Firestore.instance
-        .collection(user)
+        .collection('inventory')
         .document(_inventory)
         .get()
         .then((DocumentSnapshot ds) {
@@ -129,7 +111,7 @@ class _AddFormState extends State<AddForm> {
     // check for already exists
 
     Firestore.instance
-        .collection(user)
+        .collection('inventory')
         .document(_inventory)
         .get()
         .then((DocumentSnapshot ds) {
@@ -140,19 +122,19 @@ class _AddFormState extends State<AddForm> {
         // add a new item
 
         Firestore.instance
-            .collection(user)
+            .collection('inventory')
             .document(_inventory.toLowerCase())
             .setData({_item.toLowerCase(): _count});
 
       Firestore.instance
-          .collection(user)
+          .collection('record')
           .document('date')
           .updateData({_inventory.toLowerCase(): edited_date});
 
     });
 
     Firestore.instance
-        .collection(user)
+        .collection('inventory')
         .document(_inventory)
         .snapshots()
         .listen((data) =>
@@ -174,23 +156,23 @@ class _AddFormState extends State<AddForm> {
       print('old field'),
       print(old_count),
       Firestore.instance
-          .collection(user)
+          .collection('inventory')
           .document(_inventory.toLowerCase())
           .updateData({_item: old_count}),
       Firestore.instance
-          .collection(user)
+          .collection('record')
           .document('date')
           .updateData({_inventory.toLowerCase(): edited_date}),
-          exitCode
+      exitCode
     }
         : {
       Firestore.instance
-          .collection(user)
+          .collection('inventory')
           .document(_inventory.toLowerCase())
           .updateData({_item: old_count}),
       print('new field'),
       Firestore.instance
-          .collection(user)
+          .collection('record')
           .document('date')
           .updateData({_inventory.toLowerCase(): edited_date}),
 
@@ -204,8 +186,8 @@ class _AddFormState extends State<AddForm> {
 
 //  print(inventItems);
 
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Invent()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Home()));
 
   }
 
@@ -218,16 +200,7 @@ class _AddFormState extends State<AddForm> {
   decrement() {
     if (old_count <= 1) {
       // ignore: unnecessary_statements
-      Fluttertoast.showToast(
-          msg: "Count cannot be less than 1",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0
-
-      );
+      showAlertDialog(context);
     } else {
       setState(() {
         old_count = old_count - 1;
@@ -268,8 +241,6 @@ class _AddFormState extends State<AddForm> {
 
   item() {
 
-    _dropDown = "Items list ..";
-
     idata =  false;
     _form1 = false;
     _form2 = false;
@@ -280,13 +251,12 @@ class _AddFormState extends State<AddForm> {
     });
 
     if(_inventory == "New inventory .."){
-      items = [];
+      items = ["New item .."];
       _form1 = true;
       _form2 = true;
-      _dropDown = "No items yet";
     }
     else {
-      Firestore.instance.collection(user).snapshots().listen((data) =>
+      Firestore.instance.collection('inventory').snapshots().listen((data) =>
           data.documents.forEach((doc) =>
           {
             if(doc.documentID == _inventory){
@@ -295,7 +265,7 @@ class _AddFormState extends State<AddForm> {
                 items = doc.data.keys.toList();
               }),
 
-            items.add("New item ..")
+              items.add("New item ..")
             }})
       );
     }
@@ -316,20 +286,20 @@ class _AddFormState extends State<AddForm> {
 
   delete() {
     Firestore.instance
-        .collection(user)
+        .collection('inventory')
         .document(_inventory)
         .get()
         .then((DocumentSnapshot ds) {
+      // add a new item
 
       Firestore.instance
-          .collection(user)
+          .collection('inventory')
           .document(_inventory.toLowerCase())
           .delete();
-
     });
 
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Invent()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Home()));
 
   }
 
@@ -364,151 +334,64 @@ class _AddFormState extends State<AddForm> {
 
                 SizedBox(height: 20,),
 
-                    Material(
-                      color: Colors.brown.shade200,
-                      child :DefaultTextStyle(
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline2,
-                        textAlign: TextAlign.center,
-                        child: FutureBuilder<List>(
-                          future: _calculation,
-                          builder:
-                              (BuildContext context, AsyncSnapshot<List> snapshot) {
-                            List children;
-                            if (snapshot.hasData) {
-                              children = <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Theme(
-                                    data: Theme.of(context).copyWith(
-                                        canvasColor: Colors.brown
-                                    ),
-                                    child: DropdownButton(
-                                      hint: _dropDownValue == null
-                                          ? Text('Show Inventory')
-                                          : Text(
-                                        _dropDownValue,
-                                        style: TextStyle(color: Colors.brown),
-                                      ),
-                                      isExpanded: true,
-                                      iconSize: 30.0,
-                                      style: TextStyle(color: Colors.brown.shade200),
-                                      items: snapshot.data.map(
-                                            (val) {
-                                          return DropdownMenuItem<String>(
-                                            value: val,
-                                            child: Text(val),
-                                            onTap: () {
-                                              _inventory = val;
-                                              item();
-                                            },
-                                          );
-                                        },
-                                      ).toList(),
-                                      onChanged: (val) {
-                                        setState(
-                                              () {
-                                            _dropDownValue = val;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                )
-                              ];
-                            } else if (snapshot.hasError) {
-                              children = <Widget>[
-                                Icon(
-                                  Icons.error_outline,
-                                  color: Colors.red,
-                                  size: 60,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  child: Text('Error: ${snapshot.error}'),
-                                )
-                              ];
-                            } else {
-                              children = <Widget>[
-                                SizedBox(
-                                  child: CircularProgressIndicator(
-                                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
-                                  ),
-                                  width: 40,
-                                  height: 40,
-                                ),
-
-                              ];
-                            }
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: children,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-
-                    ),
-
-                  SizedBox(height: 10),
-
-                  Material(
-                    color: Colors.brown.shade200,
-                  child:
-                  DefaultTextStyle(
+                Material(
+//                  child: TextFormField(
+//                    decoration: InputDecoration(
+//                      labelText: 'Inventory',
+//                      filled: true,
+//                    ),
+//                    // ignore: missing_return
+//                    validator: (String value) {
+//                      if (value.isEmpty) return 'Inventory is Required';
+//                    },
+//                    onSaved: (String value) {
+//                      _inventory = value;
+//                    },
+//                  ),
+                  child :DefaultTextStyle(
                     style: Theme
                         .of(context)
                         .textTheme
                         .headline2,
                     textAlign: TextAlign.center,
-                    child: FutureBuilder(
-                      future: _items,
+                    child: FutureBuilder<List>(
+                      future: _calculation,
                       builder:
                           (BuildContext context, AsyncSnapshot<List> snapshot) {
                         List children;
-                        if (idata) {
+                        if (snapshot.hasData) {
                           children = <Widget>[
                             Padding(
                               padding: const EdgeInsets.all(20),
-                              child: Theme(
-                                data: Theme.of(context).copyWith(
-                                    canvasColor: Colors.brown
+                              child: DropdownButton(
+                                hint: _dropDownValue == null
+                                    ? Text('Show Inventory')
+                                    : Text(
+                                  _dropDownValue,
+                                  style: TextStyle(color: Colors.blue),
                                 ),
-                                child: DropdownButton(
-                                  hint: _dropDown == 'items'
-                                      ? null
-                                      : Text(
-                                    _dropDown,
-                                    style: TextStyle(color: Colors.brown),
-                                  ),
-                                  isExpanded: true,
-                                  iconSize: 30.0,
-                                  style: TextStyle(color: Colors.brown.shade200),
-                                  items: snapshot.data.map(
-                                        (val) {
-                                      return DropdownMenuItem<String>(
-                                        value: val,
-                                        child: Text(val),
-                                        onTap: () {
-                                          _item = val;
-                                          count();
-                                        },
-                                      );
-                                    },
-                                  ).toList(),
-                                  onChanged: (val) {
-                                    setState(
-                                          () {
-                                        _dropDown = val;
+                                isExpanded: true,
+                                iconSize: 30.0,
+                                style: TextStyle(color: Colors.blue),
+                                items: snapshot.data.map(
+                                      (val) {
+                                    return DropdownMenuItem<String>(
+                                      value: val,
+                                      child: Text(val),
+                                      onTap: () {
+                                        _inventory = val;
+                                        item();
                                       },
                                     );
                                   },
-                                ),
+                                ).toList(),
+                                onChanged: (val) {
+                                  setState(
+                                        () {
+                                      _dropDownValue = val;
+                                    },
+                                  );
+                                },
                               ),
                             )
                           ];
@@ -527,7 +410,94 @@ class _AddFormState extends State<AddForm> {
                         } else {
                           children = <Widget>[
                             SizedBox(
-                              height: 5,
+                              child: CircularProgressIndicator(),
+                              width: 40,
+                              height: 40,
+                            ),
+
+                          ];
+                        }
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: children,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                ),
+
+                SizedBox(height: 10),
+
+                Material(
+
+                  child:
+                  DefaultTextStyle(
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline2,
+                    textAlign: TextAlign.center,
+                    child: FutureBuilder(
+                      future: _items,
+                      builder:
+                          (BuildContext context, AsyncSnapshot<List> snapshot) {
+                        List children;
+                        if (idata) {
+                          children = <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: DropdownButton(
+                                hint: _dropDown == null
+                                    ? Text('Show Items')
+                                    : Text(
+                                  _dropDown,
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                                isExpanded: true,
+                                iconSize: 30.0,
+                                style: TextStyle(color: Colors.blue),
+                                items: snapshot.data.map(
+                                      (val) {
+                                    return DropdownMenuItem<String>(
+                                      value: val,
+                                      child: Text(val),
+                                      onTap: () {
+                                        _item = val;
+                                        count();
+                                      },
+                                    );
+                                  },
+                                ).toList(),
+                                onChanged: (val) {
+                                  setState(
+                                        () {
+                                      _dropDown = val;
+                                    },
+                                  );
+                                },
+                              ),
+                            )
+                          ];
+                        } else if (snapshot.hasError) {
+                          children = <Widget>[
+                            Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                              size: 60,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text('Error: ${snapshot.error}'),
+                            )
+                          ];
+                        } else {
+                          children = <Widget>[
+                            SizedBox(
+                              child: Text('loading ..'),
                             ),
 //                          const Padding(
 //                            padding: EdgeInsets.only(top: 16),
@@ -545,7 +515,7 @@ class _AddFormState extends State<AddForm> {
                       },
                     ),
                   ),
-                  ),
+                ),
                 SizedBox(height: 20,),
 
 //                Material(
@@ -565,42 +535,21 @@ class _AddFormState extends State<AddForm> {
 //                ),
 
                 Material(
-                  color: Colors.brown.shade200,
                   child: ( _form1 == false ? null: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: TextFormField(
-                      cursorColor: Colors.brown.shade200,
-
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-
-
                       decoration: InputDecoration(
-                          labelText: 'New Inventory',
-                          labelStyle: TextStyle(
-                              color: Colors.brown.shade200
-                          ),
-                          filled: true,
-                          fillColor: Colors.brown,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.brown),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.brown),
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.brown),
-                          ),
-                        ),
-                        // ignore: missing_return
-                        validator: (String value) {
-                          if (value.isEmpty) return 'Inventory is Required';
-                        },
-                        onSaved: (String value) {
-                          _inventory = value;
-                        },
+                        labelText: 'New Inventory',
+                        filled: true,
                       ),
+                      // ignore: missing_return
+                      validator: (String value) {
+                        if (value.isEmpty) return 'Inventory is Required';
+                      },
+                      onSaved: (String value) {
+                        _inventory = value;
+                      },
+                    ),
                   )
                   ),
                 ),
@@ -625,59 +574,57 @@ class _AddFormState extends State<AddForm> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Material(
-                    color: Colors.brown.shade200,
-                    child: (_form2 == false ? null :TextFormField(
-                      cursorColor: Colors.brown.shade200,
-
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-
-                      decoration: InputDecoration(
-                        labelText: 'New Item',
-                        labelStyle: TextStyle(
-                            color: Colors.brown.shade200
+                      child: (_form2 == false ? null :TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'New Item',
+                          filled: true,
                         ),
-                        fillColor: Colors.brown,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown),
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown),
-                        ),
-                        filled: true,
-                      ),
-                      // ignore: missing_return
+                        // ignore: missing_return
 //                    validator: (String value){
 //                      if(value.isEmpty) return 'Item is Required';
 //                    },
-                      onSaved: (String value) {
-                        _item = value;
-                      },
-                    )
-                    )
+                        onSaved: (String value) {
+                          _item = value;
+                        },
+                      )
+                      )
                   ),
                 ),
+
+//                Material(
+//                    child: (_form3 == true ? Text(_item) :TextFormField(
+//                      decoration: InputDecoration(
+//                        labelText: 'New Item',
+//                        filled: true,
+//                      ),
+//                      // ignore: missing_return
+////                    validator: (String value){
+////                      if(value.isEmpty) return 'Item is Required';
+////                    },
+//                      initialValue: _item,
+//                      onSaved: (String value) {
+//                        _item = value;
+//                      },
+//                    )
+//                    )
+//                ),
+
+
                 SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Center(
-                      child: Text(
-                        'Current count :  ' + old_count.toString(),
-                        style: TextStyle(color: Colors.brown, fontSize: 16),
-                      ),
+                    Text(
+                      'Current count :',
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
-//                    Text(
-//                      old_count.toString(),
-//                      style: TextStyle(color: Colors.blue, fontSize: 16),
-//                    ),
+                    Text(
+                      old_count.toString(),
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -686,45 +633,41 @@ class _AddFormState extends State<AddForm> {
                         decrement();
                       },
                       elevation: 2.0,
-                      fillColor: Colors.brown,
-
+                      fillColor: Colors.white,
                       child: Icon(
                         Icons.remove,
                         size: 20.0,
-                        color: Colors.brown.shade200,
                       ),
                       padding: EdgeInsets.all(5.0),
                       shape: CircleBorder(),
                     ),
                     Text(
                       old_count.toString(),
-                      style: TextStyle(color: Colors.brown, fontSize: 16),
+                      style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     RawMaterialButton(
                       onPressed: () {
                         increment();
                       },
                       elevation: 2.0,
-                      fillColor: Colors.brown,
+                      fillColor: Colors.white,
                       child: Icon(
                         Icons.add,
                         size: 20.0,
-                        color: Colors.brown.shade200,
                       ),
                       padding: EdgeInsets.all(5.0),
                       shape: CircleBorder(),
                     ),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
-                      color: Colors.brown,
                       child: Text(
                         'Add item',
-                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
                       ),
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
@@ -744,10 +687,9 @@ class _AddFormState extends State<AddForm> {
                       },
                     ),
                     RaisedButton(
-                      color: Colors.brown,
                       child: Text(
                         'Delete inventory',
-                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                        style: TextStyle(color: Colors.red, fontSize: 16),
                       ),
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
