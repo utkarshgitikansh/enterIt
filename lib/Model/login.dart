@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
 
     Firestore.instance
         .collection('user')
-        .document(_name)
+        .document(_name.toLowerCase())
         .get()
         .then((DocumentSnapshot ds) {
 
@@ -153,7 +153,7 @@ class _LoginState extends State<Login> {
                               if(value.isEmpty) return 'Username is Required';
                             },
                             onSaved: (String value) {
-                              _name = value;
+                              _name = value.toLowerCase();
 
                             },
                           ),

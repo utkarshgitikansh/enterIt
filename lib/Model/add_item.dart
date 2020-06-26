@@ -42,6 +42,8 @@ class _AddFormState extends State<AddForm> {
   List inventItems = ["New inventory .."];
   List items = ["New item .."];
 
+  List aitems = ["books", "bakery"];
+
   List a = ["New inventory .."];
 
   bool idata = false;
@@ -50,6 +52,7 @@ class _AddFormState extends State<AddForm> {
   bool _form3 = false;
   
   String user = globals.isLoggedIn;
+  bool formShow = false;
 
 
   @override
@@ -121,7 +124,6 @@ class _AddFormState extends State<AddForm> {
   }
 
   write() {
-
     bool set = false;
 
 //    print('yo' + inventItems.toString());
@@ -135,7 +137,6 @@ class _AddFormState extends State<AddForm> {
         .then((DocumentSnapshot ds) {
       if (ds.exists) {
         print('exists');
-
       } else
         // add a new item
 
@@ -148,7 +149,6 @@ class _AddFormState extends State<AddForm> {
           .collection(user)
           .document('date')
           .updateData({_inventory.toLowerCase(): edited_date});
-
     });
 
     Firestore.instance
@@ -206,6 +206,11 @@ class _AddFormState extends State<AddForm> {
 
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => Invent()));
+
+    setState(() {
+      formShow = false;
+    });
+
 
   }
 
@@ -331,6 +336,11 @@ class _AddFormState extends State<AddForm> {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => Invent()));
 
+    setState(() {
+      formShow = false;
+    });
+
+
   }
 
   Widget _buildName() {
@@ -356,197 +366,254 @@ class _AddFormState extends State<AddForm> {
 
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
+      child:
 
-                SizedBox(height: 20,),
+      SingleChildScrollView(
+        child: Column(
+            children: <Widget>[
 
-                    Material(
-                      color: Colors.brown.shade200,
-                      child :DefaultTextStyle(
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline2,
-                        textAlign: TextAlign.center,
-                        child: FutureBuilder<List>(
-                          future: _calculation,
-                          builder:
-                              (BuildContext context, AsyncSnapshot<List> snapshot) {
-                            List children;
-                            if (snapshot.hasData) {
-                              children = <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Theme(
-                                    data: Theme.of(context).copyWith(
-                                        canvasColor: Colors.brown
-                                    ),
-                                    child: DropdownButton(
-                                      hint: _dropDownValue == null
-                                          ? Text('Show Inventory')
-                                          : Text(
-                                        _dropDownValue,
-                                        style: TextStyle(color: Colors.brown),
-                                      ),
-                                      isExpanded: true,
-                                      iconSize: 30.0,
-                                      style: TextStyle(color: Colors.brown.shade200),
-                                      items: snapshot.data.map(
-                                            (val) {
-                                          return DropdownMenuItem<String>(
-                                            value: val,
-                                            child: Text(val),
-                                            onTap: () {
-                                              _inventory = val;
-                                              item();
-                                            },
-                                          );
-                                        },
-                                      ).toList(),
-                                      onChanged: (val) {
-                                        setState(
-                                              () {
-                                            _dropDownValue = val;
-                                          },
+              SizedBox(height: 20,),
+
+//            RaisedButton(
+//              color: Colors.brown,
+//              shape: RoundedRectangleBorder(
+//                  borderRadius: BorderRadius.circular(30.0),
+//                  side: BorderSide(color: Colors.brown)),
+//              child: Text(
+//                'Add an item',
+//                style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+//              ),
+//              onPressed: () {
+//                setState(() {
+//                  formShow = true;
+//                });
+//              },
+//            ),
+//    ],
+//      )
+//
+//        Column(
+//          children: <Widget>[
+//            RaisedButton(
+//              color: Colors.brown,
+//              shape: RoundedRectangleBorder(
+//                  borderRadius: BorderRadius.circular(30.0),
+//                  side: BorderSide(color: Colors.brown)),
+//              child: Text(
+//                'Back',
+//                style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+//              ),
+//              onPressed: () {
+//                setState(() {
+//                  formShow = false;
+//                });
+//              },
+//            ),
+//           SizedBox(height: 10,),
+             Form(
+                key: _formKey,
+
+
+                child: SingleChildScrollView(
+
+                  child: Column(
+
+                    children : <Widget>[
+                      SingleChildScrollView(
+
+                      child: Flexible(
+                        child: Card(
+                          color: Colors.brown.shade300,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              children: <Widget>[
+
+//                          SizedBox(height: 20,),
+
+                                Material(
+                                  color: Colors.brown.shade300,
+                                  child :DefaultTextStyle(
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .headline2,
+                                    textAlign: TextAlign.center,
+                                    child: FutureBuilder<List>(
+                                      future: _calculation,
+                                      builder:
+                                          (BuildContext context, AsyncSnapshot<List> snapshot) {
+                                        List children;
+                                        if (snapshot.hasData) {
+                                          children = <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.all(20),
+                                              child: Theme(
+                                                data: Theme.of(context).copyWith(
+                                                    canvasColor: Colors.brown
+                                                ),
+                                                child: DropdownButton(
+                                                  hint: _dropDownValue == null
+                                                      ? Text('Show Inventory')
+                                                      : Text(
+                                                    _dropDownValue,
+                                                    style: TextStyle(color: Colors.brown),
+                                                  ),
+                                                  isExpanded: true,
+                                                  iconSize: 30.0,
+                                                  style: TextStyle(color: Colors.brown.shade200),
+                                                  items: snapshot.data.map(
+                                                        (val) {
+                                                      return DropdownMenuItem<String>(
+                                                        value: val,
+                                                        child: Text(val),
+                                                        onTap: () {
+                                                          _inventory = val;
+                                                          item();
+                                                        },
+                                                      );
+                                                    },
+                                                  ).toList(),
+                                                  onChanged: (val) {
+                                                    setState(
+                                                          () {
+                                                        _dropDownValue = val;
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            )
+                                          ];
+                                        } else if (snapshot.hasError) {
+                                          children = <Widget>[
+                                            Icon(
+                                              Icons.error_outline,
+                                              color: Colors.red,
+                                              size: 60,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 16),
+                                              child: Text('Error: ${snapshot.error}'),
+                                            )
+                                          ];
+                                        } else {
+                                          children = <Widget>[
+                                            SizedBox(
+                                              child: CircularProgressIndicator(
+                                                valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
+                                              ),
+                                              width: 40,
+                                              height: 40,
+                                            ),
+
+                                          ];
+                                        }
+                                        return Center(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: children,
+                                          ),
                                         );
                                       },
                                     ),
                                   ),
-                                )
-                              ];
-                            } else if (snapshot.hasError) {
-                              children = <Widget>[
-                                Icon(
-                                  Icons.error_outline,
-                                  color: Colors.red,
-                                  size: 60,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  child: Text('Error: ${snapshot.error}'),
-                                )
-                              ];
-                            } else {
-                              children = <Widget>[
-                                SizedBox(
-                                  child: CircularProgressIndicator(
-                                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
-                                  ),
-                                  width: 40,
-                                  height: 40,
+
                                 ),
 
-                              ];
-                            }
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: children,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+//                          SizedBox(height: 10),
 
-                    ),
-
-                  SizedBox(height: 10),
-
-                  Material(
-                    color: Colors.brown.shade200,
-                  child:
-                  DefaultTextStyle(
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline2,
-                    textAlign: TextAlign.center,
-                    child: FutureBuilder(
-                      future: _items,
-                      builder:
-                          (BuildContext context, AsyncSnapshot<List> snapshot) {
-                        List children;
-                        if (idata) {
-                          children = <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Theme(
-                                data: Theme.of(context).copyWith(
-                                    canvasColor: Colors.brown
-                                ),
-                                child: DropdownButton(
-                                  hint: _dropDown == 'items'
-                                      ? null
-                                      : Text(
-                                    _dropDown,
-                                    style: TextStyle(color: Colors.brown),
-                                  ),
-                                  isExpanded: true,
-                                  iconSize: 30.0,
-                                  style: TextStyle(color: Colors.brown.shade200),
-                                  items: snapshot.data.map(
-                                        (val) {
-                                      return DropdownMenuItem<String>(
-                                        value: val,
-                                        child: Text(val),
-                                        onTap: () {
-                                          _item = val;
-                                          count();
-                                        },
-                                      );
-                                    },
-                                  ).toList(),
-                                  onChanged: (val) {
-                                    setState(
-                                          () {
-                                        _dropDown = val;
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          ];
-                        } else if (snapshot.hasError) {
-                          children = <Widget>[
-                            Icon(
-                              Icons.error_outline,
-                              color: Colors.red,
-                              size: 60,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Text('Error: ${snapshot.error}'),
-                            )
-                          ];
-                        } else {
-                          children = <Widget>[
-                            SizedBox(
-                              height: 5,
-                            ),
+                                Material(
+                                  color: Colors.brown.shade300,
+                                  child:
+                                  DefaultTextStyle(
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .headline2,
+                                    textAlign: TextAlign.center,
+                                    child: FutureBuilder(
+                                      future: _items,
+                                      builder:
+                                          (BuildContext context, AsyncSnapshot<List> snapshot) {
+                                        List children;
+                                        if (idata) {
+                                          children = <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.all(20),
+                                              child: Theme(
+                                                data: Theme.of(context).copyWith(
+                                                    canvasColor: Colors.brown
+                                                ),
+                                                child: DropdownButton(
+                                                  hint: _dropDown == 'items'
+                                                      ? null
+                                                      : Text(
+                                                    _dropDown,
+                                                    style: TextStyle(color: Colors.brown),
+                                                  ),
+                                                  isExpanded: true,
+                                                  iconSize: 30.0,
+                                                  style: TextStyle(color: Colors.brown.shade200),
+                                                  items: snapshot.data.map(
+                                                        (val) {
+                                                      return DropdownMenuItem<String>(
+                                                        value: val,
+                                                        child: Text(val),
+                                                        onTap: () {
+                                                          _item = val;
+                                                          count();
+                                                        },
+                                                      );
+                                                    },
+                                                  ).toList(),
+                                                  onChanged: (val) {
+                                                    setState(
+                                                          () {
+                                                        _dropDown = val;
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            )
+                                          ];
+                                        } else if (snapshot.hasError) {
+                                          children = <Widget>[
+                                            Icon(
+                                              Icons.error_outline,
+                                              color: Colors.red,
+                                              size: 60,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 16),
+                                              child: Text('Error: ${snapshot.error}'),
+                                            )
+                                          ];
+                                        } else {
+                                          children = <Widget>[
+                                            SizedBox(
+                                              height: 5,
+                                            ),
 //                          const Padding(
 //                            padding: EdgeInsets.only(top: 16),
 //                            child: Text('Awaiting result...'),
 //                          )
-                          ];
-                        }
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: children,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  ),
-                SizedBox(height: 20,),
+                                          ];
+                                        }
+                                        return Center(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: children,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+//                          SizedBox(height: 20,),
 
 //                Material(
 //                  child: TextFormField(
@@ -564,46 +631,46 @@ class _AddFormState extends State<AddForm> {
 //                  ),
 //                ),
 
-                Material(
-                  color: Colors.brown.shade200,
-                  child: ( _form1 == false ? null: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextFormField(
-                      cursorColor: Colors.brown.shade200,
+                                Material(
+                                  color: Colors.brown.shade300,
+                                  child: ( _form1 == false ? null: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: TextFormField(
+                                      cursorColor: Colors.brown.shade200,
 
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
 
 
-                      decoration: InputDecoration(
-                          labelText: 'New Inventory',
-                          labelStyle: TextStyle(
-                              color: Colors.brown.shade200
-                          ),
-                          filled: true,
-                          fillColor: Colors.brown,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.brown),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.brown),
-                          ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.brown),
-                          ),
-                        ),
-                        // ignore: missing_return
-                        validator: (String value) {
-                          if (value.isEmpty) return 'Inventory is Required';
-                        },
-                        onSaved: (String value) {
-                          _inventory = value;
-                        },
-                      ),
-                  )
-                  ),
-                ),
+                                      decoration: InputDecoration(
+                                        labelText: 'New Inventory',
+                                        labelStyle: TextStyle(
+                                            color: Colors.brown.shade200
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.brown,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.brown),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.brown),
+                                        ),
+                                        border: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.brown),
+                                        ),
+                                      ),
+                                      // ignore: missing_return
+                                      validator: (String value) {
+                                        if (value.isEmpty) return 'Inventory is Required';
+                                      },
+                                      onSaved: (String value) {
+                                        _inventory = value;
+                                      },
+                                    ),
+                                  )
+                                  ),
+                                ),
 
 
 //                RawMaterialButton(
@@ -622,155 +689,189 @@ class _AddFormState extends State<AddForm> {
 
 
 
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Material(
-                    color: Colors.brown.shade200,
-                    child: (_form2 == false ? null :TextFormField(
-                      cursorColor: Colors.brown.shade200,
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Material(
+                                      color: Colors.brown.shade200,
+                                      child: (_form2 == false ? null :TextFormField(
+                                        cursorColor: Colors.brown.shade200,
 
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
 
-                      decoration: InputDecoration(
-                        labelText: 'New Item',
-                        labelStyle: TextStyle(
-                            color: Colors.brown.shade200
-                        ),
-                        fillColor: Colors.brown,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown),
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown),
-                        ),
-                        filled: true,
-                      ),
-                      // ignore: missing_return
+                                        decoration: InputDecoration(
+                                          labelText: 'New Item',
+                                          labelStyle: TextStyle(
+                                              color: Colors.brown.shade200
+                                          ),
+                                          fillColor: Colors.brown,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.brown),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.brown),
+                                          ),
+                                          border: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.brown),
+                                          ),
+                                          filled: true,
+                                        ),
+                                        // ignore: missing_return
 //                    validator: (String value){
 //                      if(value.isEmpty) return 'Item is Required';
 //                    },
-                      onSaved: (String value) {
-                        _item = value;
-                      },
-                    )
-                    )
-                  ),
-                ),
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                        'Current count :  ' + old_count.toString(),
-                        style: TextStyle(color: Colors.brown, fontSize: 16),
-                      ),
-                    ),
+                                        onSaved: (String value) {
+                                          _item = value;
+                                        },
+                                      )
+                                      )
+                                  ),
+                                ),
+//                          SizedBox(height: 30),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+//                              Center(
+//                                child: Text(
+//                                  'Current count :  ' + old_count.toString(),
+//                                  style: TextStyle(color: Colors.brown, fontSize: 16),
+//                                ),
+//                              ),
 //                    Text(
 //                      old_count.toString(),
 //                      style: TextStyle(color: Colors.blue, fontSize: 16),
 //                    ),
-                  ],
-                ),
-                SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RawMaterialButton(
-                      onPressed: () {
-                        decrement();
-                      },
-                      elevation: 2.0,
-                      fillColor: Colors.brown,
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    RawMaterialButton(
+                                      onPressed: () {
+                                        decrement();
+                                      },
+                                      elevation: 2.0,
+                                      fillColor: Colors.brown,
 
-                      child: Icon(
-                        Icons.remove,
-                        size: 20.0,
-                        color: Colors.brown.shade200,
+                                      child: Icon(
+                                        Icons.remove,
+                                        size: 20.0,
+                                        color: Colors.brown.shade200,
+                                      ),
+                                      padding: EdgeInsets.all(5.0),
+                                      shape: CircleBorder(),
+                                    ),
+                                    Text(
+                                      'Current count : ' + old_count.toString(),
+                                      style: TextStyle(color: Colors.brown, fontSize: 16),
+                                    ),
+                                    RawMaterialButton(
+                                      onPressed: () {
+                                        increment();
+                                      },
+                                      elevation: 2.0,
+                                      fillColor: Colors.brown,
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 20.0,
+                                        color: Colors.brown.shade200,
+                                      ),
+                                      padding: EdgeInsets.all(5.0),
+                                      shape: CircleBorder(),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 40),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    RaisedButton(
+                                      color: Colors.brown,
+                                      child: Text(
+                                        'Add item',
+                                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                                      ),
+                                      onPressed: () {
+                                        if (!_formKey.currentState.validate()) {
+                                          return;
+                                        }
+
+                                        _formKey.currentState.save();
+
+                                        if (_item.toString() == "") {
+                                          Scaffold.of(context).showSnackBar(SnackBar(
+                                            content: Text("Please enter the item!!"),
+                                          ));
+                                        }
+
+                                        write();
+                                        _formKey.currentState.reset();
+                                      },
+                                    ),
+                                    RaisedButton(
+                                      color: Colors.brown,
+                                      child: Text(
+                                        ' Delete ',
+                                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                                      ),
+                                      onPressed: () {
+                                        if (!_formKey.currentState.validate()) {
+                                          return;
+                                        }
+                                        _formKey.currentState.save();
+                                        delete();
+                                        drop();
+                                        _formKey.currentState.reset();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              SizedBox(height: 20),
+//
+//
+//                          SizedBox(height: 20),
+
+
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      padding: EdgeInsets.all(5.0),
-                      shape: CircleBorder(),
                     ),
-                    Text(
-                      old_count.toString(),
-                      style: TextStyle(color: Colors.brown, fontSize: 16),
-                    ),
-                    RawMaterialButton(
-                      onPressed: () {
-                        increment();
-                      },
-                      elevation: 2.0,
-                      fillColor: Colors.brown,
-                      child: Icon(
-                        Icons.add,
-                        size: 20.0,
-                        color: Colors.brown.shade200,
-                      ),
-                      padding: EdgeInsets.all(5.0),
-                      shape: CircleBorder(),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      color: Colors.brown,
-                      child: Text(
-                        'Add item',
-                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
-                      ),
-                      onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
+        ]
+                  ),
+                )),
+//          ],
+//        )
 
-                        _formKey.currentState.save();
-
-                        if (_item.toString() == "") {
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Please enter the item!!"),
-                          ));
-                        }
-
-                        write();
-                        _formKey.currentState.reset();
-                      },
-                    ),
-                    RaisedButton(
-                      color: Colors.brown,
-                      child: Text(
-                        'Delete inventory',
-                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
-                      ),
-                      onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        _formKey.currentState.save();
-                        delete();
-                        drop();
-                        _formKey.currentState.reset();
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
+//        const ListTile(
+//          leading: Icon(Icons.album),
+//          title: Text('The Enchanted Nightingale'),
+//          subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+//        ),
+//        ButtonBar(
+//          children: <Widget>[
+//            FlatButton(
+//              child: const Text('BUY TICKETS'),
+//              onPressed: () { /* ... */ },
+//            ),
+//            FlatButton(
+//              child: const Text('LISTEN'),
+//              onPressed: () { /* ... */ },
+//            ),
+//          ],
+//        ),
 
 
-                SizedBox(height: 20),
+],
 
-
-              ],
-            ),
-          )),
+        ),
+      ),
     );
+
+
   }
 }
 

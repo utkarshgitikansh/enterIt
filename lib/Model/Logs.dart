@@ -28,7 +28,7 @@ class _LogsState extends State<Logs> {
     return Scaffold(
       backgroundColor: Colors.brown.shade200,
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -82,7 +82,7 @@ class _LogsState extends State<Logs> {
 
           margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
 
-          child: Text('@utkarshgitikansh', textAlign: TextAlign.center,)
+          child: Text('@utkarshgitikansh', textAlign: TextAlign.center,  style: TextStyle(color: Colors.brown, fontSize: 16),)
         
       ),
 
