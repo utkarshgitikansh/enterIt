@@ -421,198 +421,197 @@ class _AddFormState extends State<AddForm> {
                     children : <Widget>[
                       SingleChildScrollView(
 
-                      child: Flexible(
-                        child: Card(
-                          color: Colors.brown.shade300,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: <Widget>[
+                      child: Card(
+                        color: Colors.brown.shade300,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: <Widget>[
 
 //                          SizedBox(height: 20,),
 
-                                Material(
-                                  color: Colors.brown.shade300,
-                                  child :DefaultTextStyle(
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .headline2,
-                                    textAlign: TextAlign.center,
-                                    child: FutureBuilder<List>(
-                                      future: _calculation,
-                                      builder:
-                                          (BuildContext context, AsyncSnapshot<List> snapshot) {
-                                        List children;
-                                        if (snapshot.hasData) {
-                                          children = <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.all(20),
-                                              child: Theme(
-                                                data: Theme.of(context).copyWith(
-                                                    canvasColor: Colors.brown
+                              Material(
+                                color: Colors.brown.shade300,
+                                child :DefaultTextStyle(
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headline2,
+                                  textAlign: TextAlign.center,
+                                  child: FutureBuilder<List>(
+                                    future: _calculation,
+                                    builder:
+                                        (BuildContext context, AsyncSnapshot<List> snapshot) {
+                                      List children;
+                                      if (snapshot.hasData) {
+                                        children = <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(20),
+                                            child: Theme(
+                                              data: Theme.of(context).copyWith(
+                                                  canvasColor: Colors.brown
+                                              ),
+                                              child: DropdownButton(
+                                                hint: _dropDownValue == null
+                                                    ? Text('Show Inventory')
+                                                    : Text(
+                                                  _dropDownValue,
+                                                  style: TextStyle(color: Colors.brown),
                                                 ),
-                                                child: DropdownButton(
-                                                  hint: _dropDownValue == null
-                                                      ? Text('Show Inventory')
-                                                      : Text(
-                                                    _dropDownValue,
-                                                    style: TextStyle(color: Colors.brown),
-                                                  ),
-                                                  isExpanded: true,
-                                                  iconSize: 30.0,
-                                                  style: TextStyle(color: Colors.brown.shade200),
-                                                  items: snapshot.data.map(
-                                                        (val) {
-                                                      return DropdownMenuItem<String>(
-                                                        value: val,
-                                                        child: Text(val),
-                                                        onTap: () {
-                                                          _inventory = val;
-                                                          item();
-                                                        },
-                                                      );
-                                                    },
-                                                  ).toList(),
-                                                  onChanged: (val) {
-                                                    setState(
-                                                          () {
-                                                        _dropDownValue = val;
+                                                isExpanded: true,
+                                                iconSize: 30.0,
+                                                style: TextStyle(color: Colors.brown.shade200),
+                                                items: snapshot.data.map(
+                                                      (val) {
+                                                    return DropdownMenuItem<String>(
+                                                      value: val,
+                                                      child: Text(val),
+                                                      onTap: () {
+                                                        _inventory = val;
+                                                        item();
                                                       },
                                                     );
                                                   },
-                                                ),
+                                                ).toList(),
+                                                onChanged: (val) {
+                                                  setState(
+                                                        () {
+                                                      _dropDownValue = val;
+                                                    },
+                                                  );
+                                                },
                                               ),
-                                            )
-                                          ];
-                                        } else if (snapshot.hasError) {
-                                          children = <Widget>[
-                                            Icon(
-                                              Icons.error_outline,
-                                              color: Colors.red,
-                                              size: 60,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 16),
-                                              child: Text('Error: ${snapshot.error}'),
-                                            )
-                                          ];
-                                        } else {
-                                          children = <Widget>[
-                                            SizedBox(
-                                              child: CircularProgressIndicator(
-                                                valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
-                                              ),
-                                              width: 40,
-                                              height: 40,
-                                            ),
-
-                                          ];
-                                        }
-                                        return Center(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: children,
+                                          )
+                                        ];
+                                      } else if (snapshot.hasError) {
+                                        children = <Widget>[
+                                          Icon(
+                                            Icons.error_outline,
+                                            color: Colors.red,
+                                            size: 60,
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 16),
+                                            child: Text('Error: ${snapshot.error}'),
+                                          )
+                                        ];
+                                      } else {
+                                        children = <Widget>[
+                                          SizedBox(
+                                            child: CircularProgressIndicator(
+                                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
+                                            ),
+                                            width: 40,
+                                            height: 40,
+                                          ),
 
+                                        ];
+                                      }
+                                      return Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: children,
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
+
+                              ),
 
 //                          SizedBox(height: 10),
 
-                                Material(
-                                  color: Colors.brown.shade300,
-                                  child:
-                                  DefaultTextStyle(
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .headline2,
-                                    textAlign: TextAlign.center,
-                                    child: FutureBuilder(
-                                      future: _items,
-                                      builder:
-                                          (BuildContext context, AsyncSnapshot<List> snapshot) {
-                                        List children;
-                                        if (idata) {
-                                          children = <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.all(20),
-                                              child: Theme(
-                                                data: Theme.of(context).copyWith(
-                                                    canvasColor: Colors.brown
+                              Material(
+                                color: Colors.brown.shade300,
+                                child:
+                                DefaultTextStyle(
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headline2,
+                                  textAlign: TextAlign.center,
+                                  child: FutureBuilder(
+                                    future: _items,
+                                    builder:
+                                        (BuildContext context, AsyncSnapshot<List> snapshot) {
+                                      List children;
+                                      if (idata) {
+                                        children = <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(20),
+                                            child: Theme(
+                                              data: Theme.of(context).copyWith(
+                                                  canvasColor: Colors.brown
+                                              ),
+                                              child: DropdownButton(
+                                                hint: _dropDown == 'items'
+                                                    ? null
+                                                    : Text(
+                                                  _dropDown,
+                                                  style: TextStyle(color: Colors.brown),
                                                 ),
-                                                child: DropdownButton(
-                                                  hint: _dropDown == 'items'
-                                                      ? null
-                                                      : Text(
-                                                    _dropDown,
-                                                    style: TextStyle(color: Colors.brown),
-                                                  ),
-                                                  isExpanded: true,
-                                                  iconSize: 30.0,
-                                                  style: TextStyle(color: Colors.brown.shade200),
-                                                  items: snapshot.data.map(
-                                                        (val) {
-                                                      return DropdownMenuItem<String>(
-                                                        value: val,
-                                                        child: Text(val),
-                                                        onTap: () {
-                                                          _item = val;
-                                                          count();
-                                                        },
-                                                      );
-                                                    },
-                                                  ).toList(),
-                                                  onChanged: (val) {
-                                                    setState(
-                                                          () {
-                                                        _dropDown = val;
+                                                isExpanded: true,
+                                                iconSize: 30.0,
+                                                style: TextStyle(color: Colors.brown.shade200),
+                                                items: snapshot.data.map(
+                                                      (val) {
+                                                    return DropdownMenuItem<String>(
+                                                      value: val,
+                                                      child: Text(val),
+                                                      onTap: () {
+                                                        _item = val;
+                                                        count();
                                                       },
                                                     );
                                                   },
-                                                ),
+                                                ).toList(),
+                                                onChanged: (val) {
+                                                  setState(
+                                                        () {
+                                                      _dropDown = val;
+                                                    },
+                                                  );
+                                                },
                                               ),
-                                            )
-                                          ];
-                                        } else if (snapshot.hasError) {
-                                          children = <Widget>[
-                                            Icon(
-                                              Icons.error_outline,
-                                              color: Colors.red,
-                                              size: 60,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 16),
-                                              child: Text('Error: ${snapshot.error}'),
-                                            )
-                                          ];
-                                        } else {
-                                          children = <Widget>[
-                                            SizedBox(
-                                              height: 5,
-                                            ),
+                                          )
+                                        ];
+                                      } else if (snapshot.hasError) {
+                                        children = <Widget>[
+                                          Icon(
+                                            Icons.error_outline,
+                                            color: Colors.red,
+                                            size: 60,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 16),
+                                            child: Text('Error: ${snapshot.error}'),
+                                          )
+                                        ];
+                                      } else {
+                                        children = <Widget>[
+                                          SizedBox(
+                                            height: 5,
+                                          ),
 //                          const Padding(
 //                            padding: EdgeInsets.only(top: 16),
 //                            child: Text('Awaiting result...'),
 //                          )
-                                          ];
-                                        }
-                                        return Center(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: children,
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                        ];
+                                      }
+                                      return Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: children,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
+                              ),
 //                          SizedBox(height: 20,),
 
 //                Material(
@@ -631,46 +630,46 @@ class _AddFormState extends State<AddForm> {
 //                  ),
 //                ),
 
-                                Material(
-                                  color: Colors.brown.shade300,
-                                  child: ( _form1 == false ? null: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: TextFormField(
-                                      cursorColor: Colors.brown.shade200,
+                              Material(
+                                color: Colors.brown.shade300,
+                                child: ( _form1 == false ? null: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: TextFormField(
+                                    cursorColor: Colors.brown.shade200,
 
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-
-
-                                      decoration: InputDecoration(
-                                        labelText: 'New Inventory',
-                                        labelStyle: TextStyle(
-                                            color: Colors.brown.shade200
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.brown,
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.brown),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.brown),
-                                        ),
-                                        border: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.brown),
-                                        ),
-                                      ),
-                                      // ignore: missing_return
-                                      validator: (String value) {
-                                        if (value.isEmpty) return 'Inventory is Required';
-                                      },
-                                      onSaved: (String value) {
-                                        _inventory = value;
-                                      },
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
-                                  )
+
+
+                                    decoration: InputDecoration(
+                                      labelText: 'New Inventory',
+                                      labelStyle: TextStyle(
+                                          color: Colors.brown.shade200
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.brown,
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.brown),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.brown),
+                                      ),
+                                      border: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.brown),
+                                      ),
+                                    ),
+                                    // ignore: missing_return
+                                    validator: (String value) {
+                                      if (value.isEmpty) return 'Inventory is Required';
+                                    },
+                                    onSaved: (String value) {
+                                      _inventory = value;
+                                    },
                                   ),
+                                )
                                 ),
+                              ),
 
 
 //                RawMaterialButton(
@@ -689,49 +688,49 @@ class _AddFormState extends State<AddForm> {
 
 
 
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Material(
-                                      color: Colors.brown.shade200,
-                                      child: (_form2 == false ? null :TextFormField(
-                                        cursorColor: Colors.brown.shade200,
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Material(
+                                    color: Colors.brown.shade200,
+                                    child: (_form2 == false ? null :TextFormField(
+                                      cursorColor: Colors.brown.shade200,
 
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
 
-                                        decoration: InputDecoration(
-                                          labelText: 'New Item',
-                                          labelStyle: TextStyle(
-                                              color: Colors.brown.shade200
-                                          ),
-                                          fillColor: Colors.brown,
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.brown),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.brown),
-                                          ),
-                                          border: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.brown),
-                                          ),
-                                          filled: true,
+                                      decoration: InputDecoration(
+                                        labelText: 'New Item',
+                                        labelStyle: TextStyle(
+                                            color: Colors.brown.shade200
                                         ),
-                                        // ignore: missing_return
+                                        fillColor: Colors.brown,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.brown),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.brown),
+                                        ),
+                                        border: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.brown),
+                                        ),
+                                        filled: true,
+                                      ),
+                                      // ignore: missing_return
 //                    validator: (String value){
 //                      if(value.isEmpty) return 'Item is Required';
 //                    },
-                                        onSaved: (String value) {
-                                          _item = value;
-                                        },
-                                      )
-                                      )
-                                  ),
+                                      onSaved: (String value) {
+                                        _item = value;
+                                      },
+                                    )
+                                    )
                                 ),
+                              ),
 //                          SizedBox(height: 30),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
 //                              Center(
 //                                child: Text(
 //                                  'Current count :  ' + old_count.toString(),
@@ -742,100 +741,99 @@ class _AddFormState extends State<AddForm> {
 //                      old_count.toString(),
 //                      style: TextStyle(color: Colors.blue, fontSize: 16),
 //                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    RawMaterialButton(
-                                      onPressed: () {
-                                        decrement();
-                                      },
-                                      elevation: 2.0,
-                                      fillColor: Colors.brown,
-
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 20.0,
-                                        color: Colors.brown.shade200,
-                                      ),
-                                      padding: EdgeInsets.all(5.0),
-                                      shape: CircleBorder(),
-                                    ),
-                                    Text(
-                                      'Current count : ' + old_count.toString(),
-                                      style: TextStyle(color: Colors.brown, fontSize: 16),
-                                    ),
-                                    RawMaterialButton(
-                                      onPressed: () {
-                                        increment();
-                                      },
-                                      elevation: 2.0,
-                                      fillColor: Colors.brown,
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 20.0,
-                                        color: Colors.brown.shade200,
-                                      ),
-                                      padding: EdgeInsets.all(5.0),
-                                      shape: CircleBorder(),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 40),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    RaisedButton(
-                                      color: Colors.brown,
-                                      child: Text(
-                                        'Add item',
-                                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
-                                      ),
-                                      onPressed: () {
-                                        if (!_formKey.currentState.validate()) {
-                                          return;
-                                        }
-
-                                        _formKey.currentState.save();
-
-                                        if (_item.toString() == "") {
-                                          Scaffold.of(context).showSnackBar(SnackBar(
-                                            content: Text("Please enter the item!!"),
-                                          ));
-                                        }
-
-                                        write();
-                                        _formKey.currentState.reset();
-                                      },
-                                    ),
-                                    RaisedButton(
-                                      color: Colors.brown,
-                                      child: Text(
-                                        ' Delete ',
-                                        style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
-                                      ),
-                                      onPressed: () {
-                                        if (!_formKey.currentState.validate()) {
-                                          return;
-                                        }
-                                        _formKey.currentState.save();
-                                        delete();
-                                        drop();
-                                        _formKey.currentState.reset();
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                ],
+                              ),
                               SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  RawMaterialButton(
+                                    onPressed: () {
+                                      decrement();
+                                    },
+                                    elevation: 2.0,
+                                    fillColor: Colors.brown,
+
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20.0,
+                                      color: Colors.brown.shade200,
+                                    ),
+                                    padding: EdgeInsets.all(5.0),
+                                    shape: CircleBorder(),
+                                  ),
+                                  Text(
+                                    'Current count : ' + old_count.toString(),
+                                    style: TextStyle(color: Colors.brown, fontSize: 16),
+                                  ),
+                                  RawMaterialButton(
+                                    onPressed: () {
+                                      increment();
+                                    },
+                                    elevation: 2.0,
+                                    fillColor: Colors.brown,
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 20.0,
+                                      color: Colors.brown.shade200,
+                                    ),
+                                    padding: EdgeInsets.all(5.0),
+                                    shape: CircleBorder(),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 40),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  RaisedButton(
+                                    color: Colors.brown,
+                                    child: Text(
+                                      'Add item',
+                                      style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                                    ),
+                                    onPressed: () {
+                                      if (!_formKey.currentState.validate()) {
+                                        return;
+                                      }
+
+                                      _formKey.currentState.save();
+
+                                      if (_item.toString() == "") {
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text("Please enter the item!!"),
+                                        ));
+                                      }
+
+                                      write();
+                                      _formKey.currentState.reset();
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    color: Colors.brown,
+                                    child: Text(
+                                      ' Delete ',
+                                      style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                                    ),
+                                    onPressed: () {
+                                      if (!_formKey.currentState.validate()) {
+                                        return;
+                                      }
+                                      _formKey.currentState.save();
+                                      delete();
+                                      drop();
+                                      _formKey.currentState.reset();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            SizedBox(height: 20),
 //
 //
 //                          SizedBox(height: 20),
 
 
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ),

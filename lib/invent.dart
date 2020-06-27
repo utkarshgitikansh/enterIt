@@ -417,14 +417,8 @@ class _InventState extends State<Invent>
             new Tab(icon: new Icon(Icons.library_add)),
             new Tab(icon: new Icon(Icons.person)),
           ],
-
-
         ),
-
-
       ),
-
-
 
       body:
       new TabBarView(
@@ -433,70 +427,67 @@ class _InventState extends State<Invent>
       Padding(
       padding: const EdgeInsets.all(12.0),
       child:
-          Flexible(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection(globals.isLoggedIn).snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError)
-                      return new Text('Error: ${snapshot.error}');
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Center(child: CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
-                        ));
-                      default:
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: new ListView(
+          StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance.collection(globals.isLoggedIn).snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError)
+                return new Text('Error: ${snapshot.error}');
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
+                  ));
+                default:
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: new ListView(
 
-                            // ignore: missing_return
-                            children: snapshot.data.documents.map((
-                                DocumentSnapshot document) {
-                              List list = [];
-                              String listItem = document.documentID;
+                      // ignore: missing_return
+                      children: snapshot.data.documents.map((
+                          DocumentSnapshot document) {
+                        List list = [];
+                        String listItem = document.documentID;
 
-                              if(listItem == 'date'){
-                                return Text('');
-                              }
+                        if(listItem == 'date'){
+                          return Text('');
+                        }
 
-                              for (int i = 0; i < document.data.length; i++) {
-                                list.add("✔  " + document.data.keys.elementAt(i) + "  :  " +
-                                    document.data.values.elementAt(i).toString() + "\n");
-                              }
-                              List list2 = [];
+                        for (int i = 0; i < document.data.length; i++) {
+                          list.add("✔  " + document.data.keys.elementAt(i) + "  :  " +
+                              document.data.values.elementAt(i).toString() + "\n");
+                        }
+                        List list2 = [];
 
-                              for (int i = 0; i < document.data.length; i++) {
-                                list2.add(document.data.values.elementAt(i));
-                              }
+                        for (int i = 0; i < document.data.length; i++) {
+                          list2.add(document.data.values.elementAt(i));
+                        }
 
-                              return Center(
-                                child: Container(
+                        return Center(
+                          child: Container(
 //                                  height: 100,
-                                  child: Flexible(
-                                    child: Card(
-                                      color: Colors.brown,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                             ListTile(
+                            child: Card(
+                              color: Colors.brown,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                     ListTile(
 //                                          leading: Icon(Icons.assignment_turned_in, color: Colors.brown.shade200,),
-                                              title: Text(listItem + '\n' , style: TextStyle(fontWeight: FontWeight.w900, color: Colors.brown.shade200)),
-                                              subtitle: Text(list.toString()
-                                                  .replaceAll('[', " ")
+                                      title: Text(listItem + '\n' , style: TextStyle(fontWeight: FontWeight.w900, color: Colors.brown.shade200)),
+                                      subtitle: Text(list.toString()
+                                          .replaceAll('[', " ")
 //                                          .replaceAll('[', "")
-                                          .replaceAll(']', "")
-                                          .replaceAll(',', "\n"), style: TextStyle(fontWeight: FontWeight.w500, color: Colors.brown.shade200)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                  .replaceAll(']', "")
+                                  .replaceAll(',', "\n"), style: TextStyle(fontWeight: FontWeight.w500, color: Colors.brown.shade200)),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              );
+                              ),
+                            ),
+                          ),
+                        );
 
 //                              return new InCard(item_title: listItem,
 ////                        document.documentID,
@@ -506,13 +497,12 @@ class _InventState extends State<Invent>
 //                                    .replaceAll(',', "   |  "),
 //
 //                              );
-                            }).toList(),
-                          ),
-                        );
-                    }
-                  },
-                ),
-              ),
+                      }).toList(),
+                    ),
+                  );
+              }
+            },
+          ),
           ),
 
 //        const ListTile(
