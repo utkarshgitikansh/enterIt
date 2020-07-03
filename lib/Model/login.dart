@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
 
     Firestore.instance
         .collection('user')
-        .document(_name.toLowerCase())
+        .document(_name)
         .get()
         .then((DocumentSnapshot ds) {
 
@@ -51,17 +51,27 @@ class _LoginState extends State<Login> {
 
 //        print(globals.isLoggedIn);
 
+        Fluttertoast.showToast(
+            msg: "Welcome to enterIt",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Color(0xff0392cf),
+            textColor: Colors.white,
+            fontSize: 16.0
+
+        );
 
         Navigator.pushReplacementNamed(context, '/home');
 
       }
       else
         Fluttertoast.showToast(
-            msg: "User doesn't exist",
+            msg: "User doesn't exist. Please note username is case sensitive",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
+            backgroundColor: Color(0xff0392cf),
             textColor: Colors.white,
             fontSize: 16.0
 
@@ -96,7 +106,7 @@ class _LoginState extends State<Login> {
 
       child: Scaffold(
 
-          backgroundColor: Colors.brown.shade200,
+          backgroundColor: Colors.white,
 //          appBar: AppBar(
 //            centerTitle: true,
 //            backgroundColor: Colors.blue,
@@ -113,20 +123,31 @@ class _LoginState extends State<Login> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+
+                        Center(
+                          child:
+                            new Text('EnterIt', style: TextStyle(
+                              color:  Color(0xff0392cf),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 50,
+                              fontFamily: 'Bradley'
+                            ),),
+                        ),
+                        SizedBox(height: 30,),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
 
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff4a4e4d),
                             ),
 
-                            cursorColor: Colors.brown.shade200,
+                            cursorColor: Color(0xff4a4e4d),
 
                             decoration: InputDecoration(
                                 labelText: 'Username',
                                 labelStyle: TextStyle(
-                                    color: Colors.brown.shade200,
+                                    color: Color(0xff4a4e4d),
                                 ),
 
 //                          focusedBorder:OutlineInputBorder(
@@ -134,15 +155,15 @@ class _LoginState extends State<Login> {
 //                                ),
 
                                 filled: true,
-                                fillColor: Colors.brown,
+                                fillColor: Color(0xfffdf498),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
 //                              icon: const Padding(
 //                                  padding: const EdgeInsets.only(top: 15.0),
@@ -153,7 +174,7 @@ class _LoginState extends State<Login> {
                               if(value.isEmpty) return 'Username is Required';
                             },
                             onSaved: (String value) {
-                              _name = value.toLowerCase();
+                              _name = value;
 
                             },
                           ),
@@ -164,28 +185,28 @@ class _LoginState extends State<Login> {
                           padding: const EdgeInsets.all(10.0),
 
                           child: TextFormField(
-                            cursorColor: Colors.brown.shade200,
+                            cursorColor: Color(0xff4a4e4d),
 
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff4a4e4d),
                             ),
 
                             decoration: InputDecoration(
                                 labelText: 'Password',
                                 labelStyle: TextStyle(
-                                    color: Colors.brown.shade200
+                                    color: Color(0xff4a4e4d)
                                 ),
 
                                 filled: true,
-                                fillColor: Colors.brown,
+                                fillColor: Color(0xfffdf498),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
 //                          validator: (val) => val.length < 6 ? 'Password too short.' : null,
@@ -210,11 +231,11 @@ class _LoginState extends State<Login> {
                           children: <Widget>[
 
                             RaisedButton(
-                              color: Colors.brown,
+                              color: Color(0xff0392cf),
                               child: Text(
                                 'Login',
                                 style: TextStyle(
-                                    color: Colors.brown.shade200,
+                                    color: Colors.white,
                                     fontSize: 16
                                 ),
                               ),
@@ -242,7 +263,7 @@ class _LoginState extends State<Login> {
                               child: new Text('New User (Signup)',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
-                                  color: Colors.brown,
+                                  color: Color(0xff0392cf),
                                 ),),
 
                               onTap: () => Navigator.pushReplacementNamed(context, '/signup')
@@ -255,7 +276,19 @@ class _LoginState extends State<Login> {
                   )
               ),
             ),
-          )
+
+
+          ),
+
+        bottomNavigationBar: Container(
+
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+
+            child: Text('@utkarshgitikansh', textAlign: TextAlign.center,  style: TextStyle(color:Color(0xff0392cf), fontSize: 16),)
+
+        ),
+
+
       ),
     );
   }

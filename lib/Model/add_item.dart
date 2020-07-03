@@ -27,24 +27,24 @@ class _AddFormState extends State<AddForm> {
 
   var DBRef = Firestore.instance.collection('items').snapshots();
 
-  String _inventory = 'inventory';
+  String _inventory = 'brand';
   String _item = 'item';
   String edited_date;
 
   String _dropDownValue;
   String _dropDown;
 
-  int _count = 1;
+  int _count = 0;
   int old_count = 0;
   int pcount;
 
   List arr = [];
-  List inventItems = ["New inventory .."];
+  List inventItems = ["New brand .."];
   List items = ["New item .."];
 
   List aitems = ["books", "bakery"];
 
-  List a = ["New inventory .."];
+  List a = ["New brand .."];
 
   bool idata = false;
   bool _form1 = false;
@@ -58,31 +58,29 @@ class _AddFormState extends State<AddForm> {
   @override
   void initState() {
 
-    print(user);
-
-    // ignore: invalid_use_of_protected_member
-    (context as Element).reassemble();
+//    // ignore: invalid_use_of_protected_member
+//    (context as Element).reassemble();
 
     Firestore.instance.collection(user).snapshots().listen((data) =>
         data.documents.forEach((doc) => inventItems.add(doc.documentID)));
 
 
-//    getInvent();
-    Future<List> _invent = Future<List>.delayed(
-      Duration(seconds: 0),
-          () => inventItems,
-    );
+////    getInvent();
+//    Future<List> _invent = Future<List>.delayed(
+//      Duration(milliseconds: 100),
+//          () => inventItems,
+//    );
 
 
+//    print('init state');
 
-
-    print('init state');
     super.initState();
+
   }
 
-  Future getInvent() async {
-    return new Future.delayed(Duration(seconds: 1), () => print(inventItems));
-  }
+//  Future getInvent() async {
+//    return new Future.delayed(Duration(milliseconds: 100), () => print(inventItems));
+//  }
 
   count() {
 
@@ -125,76 +123,125 @@ class _AddFormState extends State<AddForm> {
 
   write() {
     bool set = false;
+    int cnt;
 
-//    print('yo' + inventItems.toString());
+    Fluttertoast.showToast(
+        msg: "Updating ...",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor:  Color(0xff0392cf),
+        textColor: Colors.white,
+        fontSize: 16.0
+
+    );
+
 
     // check for already exists
 
     Firestore.instance
         .collection(user)
-        .document(_inventory)
+        .document(_inventory.toLowerCase())
         .get()
         .then((DocumentSnapshot ds) {
       if (ds.exists) {
-        print('exists');
-      } else
-        // add a new item
 
-        Firestore.instance
-            .collection(user)
-            .document(_inventory.toLowerCase())
-            .setData({_item.toLowerCase(): _count});
+
+          Firestore.instance
+              .collection(user)
+              .document(_inventory.toLowerCase())
+              .updateData({_item.toLowerCase() : old_count});
+
 
       Firestore.instance
           .collection(user)
           .document('date')
           .updateData({_inventory.toLowerCase(): edited_date});
+
+
+      }
+
+      else {
+
+
+        // add a new item
+
+        print(_count);
+        print(old_count);
+
+
+        Firestore.instance
+            .collection(user)
+            .document(_inventory.toLowerCase())
+            .setData({_item.toLowerCase(): old_count});
+
+
+
+        Firestore.instance
+            .collection(user)
+            .document('date')
+            .updateData({_inventory.toLowerCase(): edited_date});
+
+      }
     });
 
-    Firestore.instance
-        .collection(user)
-        .document(_inventory)
-        .snapshots()
-        .listen((data) =>
-    data.data.keys.toList().indexOf(_item) >= 0 &&
-        data.data.values
-            .elementAt(data.data.keys.toList().indexOf(_item)) ==
-            _count
-//             data.data.values.toList().indexOf(_item) == _count
-        ?
-//     print('old data')
+//    Firestore.instance
+//        .collection(user)
+//        .document(_inventory)
+//        .snapshots()
+//        .listen((data) =>
 
-    //       print('new data'),
-    {
-      //pcount = data.data.values.elementAt(data.data.keys.toList().indexOf(_item.toLowerCase())),
-      pcount = _count,
-      arr.add(data.data),
-//      print(pcount),
-//      print(arr),
-      print('old field'),
-      print(old_count),
-      Firestore.instance
-          .collection(user)
-          .document(_inventory.toLowerCase())
-          .updateData({_item: old_count}),
-      Firestore.instance
-          .collection(user)
-          .document('date')
-          .updateData({_inventory.toLowerCase(): edited_date}),
-          exitCode
-    }
-        : {
-      Firestore.instance
-          .collection(user)
-          .document(_inventory.toLowerCase())
-          .updateData({_item: old_count}),
-      print('new field'),
-      Firestore.instance
-          .collection(user)
-          .document('date')
-          .updateData({_inventory.toLowerCase(): edited_date}),
 
-    });
+
+//    data.data.keys.toList().indexOf(_item) >= 0 &&
+//        data.data.values
+//            .elementAt(data.data.keys.toList().indexOf(_item)) ==
+//            _count
+
+//        ?
+
+//    {
+
+//      pcount = _count,
+//      arr.add(data.data),
+//
+//      print('old field'),
+//      print(old_count),
+
+//      Firestore.instance
+//          .collection(user)
+//          .document(_inventory.toLowerCase())
+//          .updateData({_item: old_count}),
+//
+//      Firestore.instance
+//          .collection(user)
+//          .document('date')
+//          .updateData({_inventory.toLowerCase(): edited_date}),
+//          exit
+//
+//    }
+
+
+//        :
+
+
+//    {
+//      Firestore.instance
+//          .collection(user)
+//          .document(_inventory.toLowerCase())
+//          .updateData({_item: old_count}),
+//      print('new field'),
+//      Firestore.instance
+//          .collection(user)
+//          .document('date')
+//          .updateData({_inventory.toLowerCase(): edited_date}),
+//       exit
+//    }
+
+//    );
+
+
+
 
     DateTime today = new DateTime.now();
     //edited_date ="${today.year.toString()}-${today.month.toString().padLeft(2,'0')}-${today.day.toString().padLeft(2,'0')}";
@@ -204,12 +251,18 @@ class _AddFormState extends State<AddForm> {
 
 //  print(inventItems);
 
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Invent()));
+    new Future.delayed(const Duration(milliseconds: 500),
+        () => Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => Invent()))
+    );
 
-    setState(() {
-      formShow = false;
-    });
+
+//    Navigator.pushReplacement(context,
+//        MaterialPageRoute(builder: (context) => Invent()));
+
+//    setState(() {
+//      formShow = false;
+//    });
 
 
   }
@@ -221,14 +274,14 @@ class _AddFormState extends State<AddForm> {
   }
 
   decrement() {
-    if (old_count <= 1) {
+    if (old_count <= 0) {
       // ignore: unnecessary_statements
       Fluttertoast.showToast(
-          msg: "Count cannot be less than 1",
+          msg: "Count cannot be less than 0",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xff0392cf),
           textColor: Colors.white,
           fontSize: 16.0
 
@@ -284,7 +337,7 @@ class _AddFormState extends State<AddForm> {
       old_count = 0;
     });
 
-    if(_inventory == "New inventory .."){
+    if(_inventory == "New brand .."){
       items = [];
       _form1 = true;
       _form2 = true;
@@ -349,8 +402,9 @@ class _AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
+
     Future<List> _calculation = Future<List>.delayed(
-      Duration(seconds: 0),
+      Duration(milliseconds: 100),
           () => inventItems,
     );
 
@@ -360,7 +414,7 @@ class _AddFormState extends State<AddForm> {
     );
 
 
-    Future.delayed(Duration(seconds: 2), () => print(items));
+//    Future.delayed(Duration(seconds: 0), () => print(items));
 
 //    getInvent();
 
@@ -374,42 +428,6 @@ class _AddFormState extends State<AddForm> {
 
               SizedBox(height: 20,),
 
-//            RaisedButton(
-//              color: Colors.brown,
-//              shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(30.0),
-//                  side: BorderSide(color: Colors.brown)),
-//              child: Text(
-//                'Add an item',
-//                style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
-//              ),
-//              onPressed: () {
-//                setState(() {
-//                  formShow = true;
-//                });
-//              },
-//            ),
-//    ],
-//      )
-//
-//        Column(
-//          children: <Widget>[
-//            RaisedButton(
-//              color: Colors.brown,
-//              shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(30.0),
-//                  side: BorderSide(color: Colors.brown)),
-//              child: Text(
-//                'Back',
-//                style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
-//              ),
-//              onPressed: () {
-//                setState(() {
-//                  formShow = false;
-//                });
-//              },
-//            ),
-//           SizedBox(height: 10,),
              Form(
                 key: _formKey,
 
@@ -422,7 +440,7 @@ class _AddFormState extends State<AddForm> {
                       SingleChildScrollView(
 
                       child: Card(
-                        color: Colors.brown.shade300,
+                        color: Color(0xfffdf498),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
@@ -431,7 +449,7 @@ class _AddFormState extends State<AddForm> {
 //                          SizedBox(height: 20,),
 
                               Material(
-                                color: Colors.brown.shade300,
+                                color: Color(0xfffdf498),
                                 child :DefaultTextStyle(
                                   style: Theme
                                       .of(context)
@@ -449,18 +467,18 @@ class _AddFormState extends State<AddForm> {
                                             padding: const EdgeInsets.all(20),
                                             child: Theme(
                                               data: Theme.of(context).copyWith(
-                                                  canvasColor: Colors.brown
+                                                  canvasColor: Color(0xff0392cf)
                                               ),
                                               child: DropdownButton(
                                                 hint: _dropDownValue == null
-                                                    ? Text('Show Inventory')
+                                                    ? Text('Show Brands', style: TextStyle(color: Color(0xff4a4e4d)))
                                                     : Text(
                                                   _dropDownValue,
-                                                  style: TextStyle(color: Colors.brown),
+                                                  style: TextStyle(color: Color(0xff4a4e4d)),
                                                 ),
                                                 isExpanded: true,
                                                 iconSize: 30.0,
-                                                style: TextStyle(color: Colors.brown.shade200),
+                                                style: TextStyle(color: Colors.white),
                                                 items: snapshot.data.map(
                                                       (val) {
                                                     return DropdownMenuItem<String>(
@@ -488,7 +506,7 @@ class _AddFormState extends State<AddForm> {
                                         children = <Widget>[
                                           Icon(
                                             Icons.error_outline,
-                                            color: Colors.red,
+                                            color: Color(0xff4a4e4d),
                                             size: 60,
                                           ),
                                           Padding(
@@ -500,7 +518,7 @@ class _AddFormState extends State<AddForm> {
                                         children = <Widget>[
                                           SizedBox(
                                             child: CircularProgressIndicator(
-                                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.brown),
+                                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
                                             ),
                                             width: 40,
                                             height: 40,
@@ -524,7 +542,7 @@ class _AddFormState extends State<AddForm> {
 //                          SizedBox(height: 10),
 
                               Material(
-                                color: Colors.brown.shade300,
+                                color:  Color(0xfffdf498),
                                 child:
                                 DefaultTextStyle(
                                   style: Theme
@@ -543,18 +561,18 @@ class _AddFormState extends State<AddForm> {
                                             padding: const EdgeInsets.all(20),
                                             child: Theme(
                                               data: Theme.of(context).copyWith(
-                                                  canvasColor: Colors.brown
+                                                  canvasColor:  Color(0xff0392cf)
                                               ),
                                               child: DropdownButton(
                                                 hint: _dropDown == 'items'
                                                     ? null
                                                     : Text(
                                                   _dropDown,
-                                                  style: TextStyle(color: Colors.brown),
+                                                  style: TextStyle(color: Color(0xff4a4e4d)),
                                                 ),
                                                 isExpanded: true,
                                                 iconSize: 30.0,
-                                                style: TextStyle(color: Colors.brown.shade200),
+                                                style: TextStyle(color: Colors.white),
                                                 items: snapshot.data.map(
                                                       (val) {
                                                     return DropdownMenuItem<String>(
@@ -631,11 +649,11 @@ class _AddFormState extends State<AddForm> {
 //                ),
 
                               Material(
-                                color: Colors.brown.shade300,
+                                color:  Color(0xfffdf498),
                                 child: ( _form1 == false ? null: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: TextFormField(
-                                    cursorColor: Colors.brown.shade200,
+                                    cursorColor: Colors.white,
 
                                     style: TextStyle(
                                       color: Colors.white,
@@ -643,25 +661,25 @@ class _AddFormState extends State<AddForm> {
 
 
                                     decoration: InputDecoration(
-                                      labelText: 'New Inventory',
+                                      labelText: 'Brand Name',
                                       labelStyle: TextStyle(
-                                          color: Colors.brown.shade200
+                                          color:  Colors.white
                                       ),
                                       filled: true,
-                                      fillColor: Colors.brown,
+                                      fillColor:  Color(0xfffdf498),
                                       enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.brown),
+                                        borderSide: BorderSide(color: Colors.white),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.brown),
+                                        borderSide: BorderSide(color: Colors.white),
                                       ),
                                       border: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.brown),
+                                        borderSide: BorderSide(color: Colors.white),
                                       ),
                                     ),
                                     // ignore: missing_return
                                     validator: (String value) {
-                                      if (value.isEmpty) return 'Inventory is Required';
+                                      if (value.isEmpty) return 'Brand is Required';
                                     },
                                     onSaved: (String value) {
                                       _inventory = value;
@@ -691,28 +709,28 @@ class _AddFormState extends State<AddForm> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Material(
-                                    color: Colors.brown.shade200,
+                                    color: Colors.white,
                                     child: (_form2 == false ? null :TextFormField(
-                                      cursorColor: Colors.brown.shade200,
+                                      cursorColor: Colors.white,
 
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
 
                                       decoration: InputDecoration(
-                                        labelText: 'New Item',
+                                        labelText: 'Item Name',
                                         labelStyle: TextStyle(
-                                            color: Colors.brown.shade200
+                                            color: Colors.white
                                         ),
-                                        fillColor: Colors.brown,
+                                        fillColor: Color(0xfffdf498),
                                         enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.brown),
+                                          borderSide: BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.brown),
+                                          borderSide: BorderSide(color: Colors.white),
                                         ),
                                         border: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.brown),
+                                          borderSide: BorderSide(color: Colors.white),
                                         ),
                                         filled: true,
                                       ),
@@ -731,16 +749,6 @@ class _AddFormState extends State<AddForm> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-//                              Center(
-//                                child: Text(
-//                                  'Current count :  ' + old_count.toString(),
-//                                  style: TextStyle(color: Colors.brown, fontSize: 16),
-//                                ),
-//                              ),
-//                    Text(
-//                      old_count.toString(),
-//                      style: TextStyle(color: Colors.blue, fontSize: 16),
-//                    ),
                                 ],
                               ),
                               SizedBox(height: 20),
@@ -752,30 +760,30 @@ class _AddFormState extends State<AddForm> {
                                       decrement();
                                     },
                                     elevation: 2.0,
-                                    fillColor: Colors.brown,
+                                    fillColor: Color(0xff0392cf),
 
                                     child: Icon(
                                       Icons.remove,
                                       size: 20.0,
-                                      color: Colors.brown.shade200,
+                                      color: Colors.white,
                                     ),
                                     padding: EdgeInsets.all(5.0),
                                     shape: CircleBorder(),
                                   ),
                                   Text(
                                     'Current count : ' + old_count.toString(),
-                                    style: TextStyle(color: Colors.brown, fontSize: 16),
+                                    style: TextStyle(color: Color(0xff4a4e4d), fontSize: 16),
                                   ),
                                   RawMaterialButton(
                                     onPressed: () {
                                       increment();
                                     },
                                     elevation: 2.0,
-                                    fillColor: Colors.brown,
+                                    fillColor: Color(0xff0392cf),
                                     child: Icon(
                                       Icons.add,
                                       size: 20.0,
-                                      color: Colors.brown.shade200,
+                                      color: Colors.white,
                                     ),
                                     padding: EdgeInsets.all(5.0),
                                     shape: CircleBorder(),
@@ -787,10 +795,10 @@ class _AddFormState extends State<AddForm> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   RaisedButton(
-                                    color: Colors.brown,
+                                    color: Color(0xff0392cf),
                                     child: Text(
                                       'Add item',
-                                      style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                                      style: TextStyle(color: Colors.white, fontSize: 16),
                                     ),
                                     onPressed: () {
                                       if (!_formKey.currentState.validate()) {
@@ -810,10 +818,10 @@ class _AddFormState extends State<AddForm> {
                                     },
                                   ),
                                   RaisedButton(
-                                    color: Colors.brown,
+                                    color:Color(0xff0392cf),
                                     child: Text(
                                       ' Delete ',
-                                      style: TextStyle(color: Colors.brown.shade200, fontSize: 16),
+                                      style: TextStyle(color: Colors.white, fontSize: 16),
                                     ),
                                     onPressed: () {
                                       if (!_formKey.currentState.validate()) {

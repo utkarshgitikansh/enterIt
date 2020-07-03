@@ -254,8 +254,9 @@ class _InventState extends State<Invent>
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xff008744),
           textColor: Colors.white,
+//          Colors.brown.shade200,
           fontSize: 16.0
 
       );
@@ -387,17 +388,30 @@ class _InventState extends State<Invent>
 
     return Scaffold(
 
-      backgroundColor: Colors.brown.shade200,
+      backgroundColor: Color(0xffffffff),
+//      Colors.brown.shade200,
 
       appBar: AppBar(
-//        title: Text('EnterIt'),
-        centerTitle: true,
-        backgroundColor: Colors.brown,
 
+//        title: Padding(
+//          padding: const EdgeInsets.all(5.0),
+//          child: Text('EnterIt', style: TextStyle(
+//              color: Colors.white,
+//              fontWeight: FontWeight.bold,
+//              fontSize: 40,
+//              fontFamily: 'Bradley'
+//          ),),
+//        ),
+        centerTitle: true,
+        backgroundColor: Color(0xff0392cf),
+//        Color(0xff051e3e),
+//        Color(0xFF54B1F3),
+//        Colors.brown,
+//
 //        actions: <Widget>[
 //          // action button
 //          IconButton(
-//            color: Colors.brown.shade200,
+//            color: Colors.white,
 //            icon: Icon(Icons.power_settings_new),
 //            onPressed: () {
 //              Navigator.pushReplacementNamed(context, '/');
@@ -406,10 +420,12 @@ class _InventState extends State<Invent>
 //
 //        ],
 
-//        bottom:
-        title : new TabBar(
-          labelColor: Colors.brown.shade200,
-          indicatorColor: Colors.brown.shade200,
+        title:
+         new TabBar(
+          labelColor: Colors.white,
+//          Colors.brown.shade200,
+          indicatorColor: Colors.white,
+//          Colors.brown.shade200,
           controller: controller,
           tabs: <Widget>[
             new Tab(icon: new Icon(Icons.collections)
@@ -419,7 +435,6 @@ class _InventState extends State<Invent>
           ],
         ),
       ),
-
       body:
       new TabBarView(
         controller: controller,
@@ -465,27 +480,38 @@ class _InventState extends State<Invent>
 
                         return Center(
                           child: Container(
-//                                  height: 100,
-                            child: Card(
-                              color: Colors.brown,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                     ListTile(
+//                                  height: 100,//0xffB0C5C6  0xff54B1F3
+                            child: Column(
+                              children:  <Widget>[
+                                Card(
+                                color: Color(0xfffdf498), //008744  ffa700
+//                                Color(0xFFafd275)
+//                              Color(0xffFDEFCC),
+//                              Colors.brown,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                       ListTile(
 //                                          leading: Icon(Icons.assignment_turned_in, color: Colors.brown.shade200,),
-                                      title: Text(listItem + '\n' , style: TextStyle(fontWeight: FontWeight.w900, color: Colors.brown.shade200)),
-                                      subtitle: Text(list.toString()
-                                          .replaceAll('[', " ")
+                                        title: Text(listItem + '\n' , style: TextStyle(fontWeight: FontWeight.w900, color: Color(0xff4a4e4d))),
+//                                      Color(0xFFA6A283))),
+//                                      Colors.brown.shade200)),
+                                        subtitle: Text(list.toString()
+                                            .replaceAll('[', " ")
 //                                          .replaceAll('[', "")
-                                  .replaceAll(']', "")
-                                  .replaceAll(',', "\n"), style: TextStyle(fontWeight: FontWeight.w500, color: Colors.brown.shade200)),
-                                    ),
-                                  ],
+                                    .replaceAll(']', "")
+                                    .replaceAll(',', "\n"), style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff4a4e4d))),
+//                                      Colors.brown.shade200)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                              ],
                             ),
+
                           ),
                         );
 
@@ -505,30 +531,41 @@ class _InventState extends State<Invent>
           ),
           ),
 
-//        const ListTile(
-//          leading: Icon(Icons.album),
-//          title: Text('The Enchanted Nightingale'),
-//          subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-//        ),
-//        ButtonBar(
-//          children: <Widget>[
-//            FlatButton(
-//              child: const Text('BUY TICKETS'),
-//              onPressed: () { /* ... */ },
-//            ),
-//            FlatButton(
-//              child: const Text('LISTEN'),
-//              onPressed: () { /* ... */ },
-//            ),
-//          ],
-//        ),
-//                InventForm(),
 
           AddForm(),
           //  Test(),
           Logs(),
 
         ],
+      ),
+
+//      bottomNavigationBar:
+
+//        Container(
+//          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+//          color: Color(0xff008744),
+//          child: Padding(
+//          padding: EdgeInsets.all(5.0),
+//          child: Text('EnterIt', style: TextStyle(
+//              color: Colors.white,
+//              fontWeight: FontWeight.bold,
+//              fontSize: 40,
+//              fontFamily: 'Bradley'
+//          ),),
+//        ),
+//        ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xff0392cf),
+        child:
+
+        IconButton(
+            color: Colors.white,
+            icon: Icon(Icons.power_settings_new),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          ),
       ),
 
     );

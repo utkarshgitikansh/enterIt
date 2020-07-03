@@ -47,7 +47,7 @@ class _SignupState extends State<Signup> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
+            backgroundColor:  Color(0xff0392cf),
             textColor: Colors.white,
             fontSize: 16.0
 
@@ -59,6 +59,18 @@ class _SignupState extends State<Signup> {
         Firestore.instance
             .collection('user').document(_name)
             .setData({ 'password': _pwd});
+
+        Fluttertoast.showToast(
+            msg: "Welcome to enterIt. Please login",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor:  Color(0xff0392cf),
+            textColor: Colors.white,
+            fontSize: 16.0
+
+        );
+
 
         Navigator.pushReplacementNamed(context, '/');
       }
@@ -75,7 +87,7 @@ class _SignupState extends State<Signup> {
 
       child: Scaffold(
 
-          backgroundColor: Colors.brown.shade200,
+          backgroundColor: Colors.white,
 
           body:
           Center(
@@ -87,32 +99,44 @@ class _SignupState extends State<Signup> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+
+                        Center(
+                          child:
+                          new Text('EnterIt', style: TextStyle(
+                              color:  Color(0xff0392cf),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 50,
+                              fontFamily: 'Bradley'
+                          ),),
+                        ),
+                        SizedBox(height: 30,),
+
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
-                            cursorColor: Colors.brown.shade200,
+                            cursorColor: Color(0xff4a4e4d),
 
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff4a4e4d),
                             ),
 
 
                             decoration: InputDecoration(
                                 labelText: 'Username',
                                 labelStyle: TextStyle(
-                                  color: Colors.brown.shade200,
+                                  color: Color(0xff4a4e4d),
                                 ),
                                 filled: true,
-                                fillColor: Colors.brown,
-                                focusColor: Colors.brown,
+                                fillColor: Color(0xfffdf498),
+                                focusColor: Colors.white,
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
 //                              icon: const Padding(
 //                                  padding: const EdgeInsets.only(top: 15.0),
@@ -133,29 +157,29 @@ class _SignupState extends State<Signup> {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
-                            cursorColor: Colors.brown.shade200,
+                            cursorColor: Color(0xff4a4e4d),
 
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff4a4e4d),
                             ),
 
 
                             decoration: InputDecoration(
                                 labelText: 'Password',
                                 labelStyle: TextStyle(
-                                  color: Colors.brown.shade200,
-                                ),
+                                  color: Color(0xff4a4e4d),
+                            ),
                                 filled: true,
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.brown),
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.brown),
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
                                 border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.brown),
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
-                                fillColor: Colors.brown
+                                fillColor: Color(0xfffdf498)
                             ),
                             validator: (val) => val.length < 6 ? 'Password too short.' : null,
                             onSaved: (val) => _pwd = val,
@@ -170,28 +194,28 @@ class _SignupState extends State<Signup> {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
-                            cursorColor: Colors.brown.shade200,
+                            cursorColor: Color(0xff4a4e4d),
 
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color(0xff4a4e4d),
                             ),
 
                             decoration: InputDecoration(
                                 labelText: 'Confirm Password',
                                 labelStyle: TextStyle(
-                                  color: Colors.brown.shade200,
+                                  color: Color(0xff4a4e4d),
                                 ),
                                 filled: true,
                                 enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.brown),
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.brown),
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
                                 border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.brown),
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
-                                fillColor: Colors.brown
+                                fillColor: Color(0xfffdf498)
                             ),
                             // ignore: unrelated_type_equality_checks
                             //validator: (val) => val != _pwd ? 'Password dont match.' : null,
@@ -217,11 +241,11 @@ class _SignupState extends State<Signup> {
                           children: <Widget>[
 
                             RaisedButton(
-                              color: Colors.brown,
+                              color: Color(0xff0392cf),
                               child: Text(
                                 'Submit',
                                 style: TextStyle(
-                                    color: Colors.brown.shade200,
+                                    color: Colors.white,
                                     fontSize: 16
                                 ),
                               ),
@@ -236,7 +260,7 @@ class _SignupState extends State<Signup> {
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.black,
+                                      backgroundColor: Color(0xff0392cf),
                                       textColor: Colors.white,
                                       fontSize: 16.0
 
@@ -262,7 +286,7 @@ class _SignupState extends State<Signup> {
                               child: new Text('Back to login',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
-                                  color: Colors.brown,
+                                  color: Color(0xff0392cf),
                                 ),),
 
                               onTap: () => Navigator.pushReplacementNamed(context, '/')
@@ -275,7 +299,14 @@ class _SignupState extends State<Signup> {
                   )
               ),
             ),
-          )
+          ),
+        bottomNavigationBar: Container(
+
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+
+            child: Text('@utkarshgitikansh', textAlign: TextAlign.center,  style: TextStyle(color: Color(0xff0392cf), fontSize: 16),)
+
+        ),
       ),
     );
   }

@@ -26,21 +26,21 @@ class _LogsState extends State<Logs> {
 
 
     return Scaffold(
-      backgroundColor: Colors.brown.shade200,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Customer'),
-                subtitle: Text(globals.isLoggedIn)
+                leading: Icon(Icons.account_circle,  color: Color(0xff4a4e4d),),
+                title: Text('Customer', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff4a4e4d))),
+                subtitle: Text(globals.isLoggedIn, style: TextStyle(color: Color(0xff4a4e4d)))
             ),
             ListTile(
-                leading: Icon(Icons.access_time),
-                title: Text('Last login'),
-                subtitle: Text(globals.loginTime)
+                leading: Icon(Icons.access_time,  color: Color(0xff4a4e4d)),
+                title: Text('Last login', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff4a4e4d))),
+                subtitle: Text(globals.loginTime, style: TextStyle(color: Color(0xff4a4e4d)))
             ),
 //        ListTile(
 //            leading: Icon(Icons.access_time),
@@ -51,11 +51,11 @@ class _LogsState extends State<Logs> {
             SizedBox(height: 50),
 
             RaisedButton(
-              color: Colors.brown,
+              color: Color(0xff0392cf),
               child: Text(
                 'Log out',
                 style: TextStyle(
-                    color: Colors.brown.shade200,
+                    color: Colors.white,
                     fontSize: 16
                 ),
               ),
@@ -78,13 +78,13 @@ class _LogsState extends State<Logs> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-
-          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-
-          child: Text('@utkarshgitikansh', textAlign: TextAlign.center,  style: TextStyle(color: Colors.brown, fontSize: 16),)
-        
-      ),
+//      bottomNavigationBar: Container(
+//
+//          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+//
+//          child: Text('@utkarshgitikansh', textAlign: TextAlign.center,  style: TextStyle(color: Colors.brown, fontSize: 16),)
+//
+//      ),
 
     );
 
