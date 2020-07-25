@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: Color(0xff0392cf),
+            backgroundColor: globals.night ? Color(0xff0392cf) : Color(0xff141d26),
             textColor: Colors.white,
             fontSize: 16.0
 
@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: Color(0xff0392cf),
+            backgroundColor: globals.night ? Color(0xff0392cf) : Color(0xff141d26),
             textColor: Colors.white,
             fontSize: 16.0
 

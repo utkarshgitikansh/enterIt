@@ -130,7 +130,7 @@ class _AddFormState extends State<AddForm> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor:  Color(0xff0392cf),
+        backgroundColor: globals.night ? Color(0xff0392cf) : Color(0xff141d26),
         textColor: Colors.white,
         fontSize: 16.0
 
@@ -226,7 +226,7 @@ class _AddFormState extends State<AddForm> {
 
 
 //    {
-//      Firestore.instance
+//      Firestore.instancefz
 //          .collection(user)
 //          .document(_inventory.toLowerCase())
 //          .updateData({_item: old_count}),
@@ -281,7 +281,7 @@ class _AddFormState extends State<AddForm> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Color(0xff0392cf),
+          backgroundColor: globals.night ? Color(0xff0392cf) : Color(0xff141d26),
           textColor: Colors.white,
           fontSize: 16.0
 
@@ -440,7 +440,7 @@ class _AddFormState extends State<AddForm> {
                       SingleChildScrollView(
 
                       child: Card(
-                        color: Color(0xfffdf498),
+                        color: (!globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
@@ -449,7 +449,7 @@ class _AddFormState extends State<AddForm> {
 //                          SizedBox(height: 20,),
 
                               Material(
-                                color: Color(0xfffdf498),
+                                color: (!globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                                 child :DefaultTextStyle(
                                   style: Theme
                                       .of(context)
@@ -467,14 +467,14 @@ class _AddFormState extends State<AddForm> {
                                             padding: const EdgeInsets.all(20),
                                             child: Theme(
                                               data: Theme.of(context).copyWith(
-                                                  canvasColor: Color(0xff0392cf)
+                                                  canvasColor: (!globals.night) ? Color(0xff243447) : Color(0xff0392cf)
                                               ),
                                               child: DropdownButton(
                                                 hint: _dropDownValue == null
-                                                    ? Text('Show Brands', style: TextStyle(color: Color(0xff4a4e4d)))
+                                                    ? Text('Show Brands', style: TextStyle(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)))
                                                     : Text(
                                                   _dropDownValue,
-                                                  style: TextStyle(color: Color(0xff4a4e4d)),
+                                                  style: TextStyle(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                                 ),
                                                 isExpanded: true,
                                                 iconSize: 30.0,
@@ -506,7 +506,7 @@ class _AddFormState extends State<AddForm> {
                                         children = <Widget>[
                                           Icon(
                                             Icons.error_outline,
-                                            color: Color(0xff4a4e4d),
+                                            color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d),
                                             size: 60,
                                           ),
                                           Padding(
@@ -542,7 +542,7 @@ class _AddFormState extends State<AddForm> {
 //                          SizedBox(height: 10),
 
                               Material(
-                                color:  Color(0xfffdf498),
+                                color: (!globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                                 child:
                                 DefaultTextStyle(
                                   style: Theme
@@ -561,14 +561,14 @@ class _AddFormState extends State<AddForm> {
                                             padding: const EdgeInsets.all(20),
                                             child: Theme(
                                               data: Theme.of(context).copyWith(
-                                                  canvasColor:  Color(0xff0392cf)
+                                                  canvasColor: (!globals.night) ? Color(0xff243447) : Color(0xff0392cf)
                                               ),
                                               child: DropdownButton(
                                                 hint: _dropDown == 'items'
                                                     ? null
                                                     : Text(
                                                   _dropDown,
-                                                  style: TextStyle(color: Color(0xff4a4e4d)),
+                                                  style: TextStyle(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                                 ),
                                                 isExpanded: true,
                                                 iconSize: 30.0,
@@ -649,32 +649,32 @@ class _AddFormState extends State<AddForm> {
 //                ),
 
                               Material(
-                                color:  Color(0xfffdf498),
+                                color: (!globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                                 child: ( _form1 == false ? null: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: TextFormField(
-                                    cursorColor: Colors.white,
+                                    cursorColor: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d),
 
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d),
                                     ),
 
 
                                     decoration: InputDecoration(
                                       labelText: 'Brand Name',
                                       labelStyle: TextStyle(
-                                          color:  Colors.white
-                                      ),
+                                          color:  (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)
+                                    ),
                                       filled: true,
-                                      fillColor:  Color(0xfffdf498),
+                                      fillColor:  (!globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                                       enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white),
+                                        borderSide: BorderSide(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white),
+                                        borderSide: BorderSide(color:(!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                       ),
                                       border: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white),
+                                        borderSide: BorderSide(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                       ),
                                     ),
                                     // ignore: missing_return
@@ -709,28 +709,28 @@ class _AddFormState extends State<AddForm> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Material(
-                                    color: Colors.white,
+                                    color:( !globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                                     child: (_form2 == false ? null :TextFormField(
-                                      cursorColor: Colors.white,
+                                      cursorColor: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d),
 
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d),
                                       ),
 
                                       decoration: InputDecoration(
                                         labelText: 'Item Name',
                                         labelStyle: TextStyle(
-                                            color: Colors.white
+                                            color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)
                                         ),
-                                        fillColor: Color(0xfffdf498),
+                                        fillColor:(!globals.night) ? Color(0xff141d26) : Color(0xfffdf498),
                                         enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white),
+                                          borderSide: BorderSide(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white),
+                                          borderSide: BorderSide(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                         ),
                                         border: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white),
+                                          borderSide: BorderSide(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
                                         ),
                                         filled: true,
                                       ),
@@ -760,7 +760,7 @@ class _AddFormState extends State<AddForm> {
                                       decrement();
                                     },
                                     elevation: 2.0,
-                                    fillColor: Color(0xff0392cf),
+                                    fillColor: (!globals.night) ? Color(0xff243447) : Color(0xff0392cf),
 
                                     child: Icon(
                                       Icons.remove,
@@ -772,14 +772,14 @@ class _AddFormState extends State<AddForm> {
                                   ),
                                   Text(
                                     'Current count : ' + old_count.toString(),
-                                    style: TextStyle(color: Color(0xff4a4e4d), fontSize: 16),
+                                    style: TextStyle(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d), fontSize: 16),
                                   ),
                                   RawMaterialButton(
                                     onPressed: () {
                                       increment();
                                     },
                                     elevation: 2.0,
-                                    fillColor: Color(0xff0392cf),
+                                    fillColor: (!globals.night) ? Color(0xff243447) : Color(0xff0392cf),
                                     child: Icon(
                                       Icons.add,
                                       size: 20.0,
@@ -795,7 +795,7 @@ class _AddFormState extends State<AddForm> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   RaisedButton(
-                                    color: Color(0xff0392cf),
+                                    color: (!globals.night) ? Color(0xff243447) : Color(0xff0392cf),
                                     child: Text(
                                       'Add item',
                                       style: TextStyle(color: Colors.white, fontSize: 16),
@@ -818,7 +818,7 @@ class _AddFormState extends State<AddForm> {
                                     },
                                   ),
                                   RaisedButton(
-                                    color:Color(0xff0392cf),
+                                    color:(!globals.night) ? Color(0xff243447) : Color(0xff0392cf),
                                     child: Text(
                                       ' Delete ',
                                       style: TextStyle(color: Colors.white, fontSize: 16),

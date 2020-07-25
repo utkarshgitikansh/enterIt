@@ -34,8 +34,11 @@ dependencies:
   firebase_database:
   cloud_firestore:
   fluttertoast:
-
-
+  searchable_dropdown:
+  dropdown_search:
+  flappy_search_bar: 1.4.1
+  string_validator: ^0.1.4
+  toggle_switch: "^0.1.5"
 
   flutter:
     sdk: flutter

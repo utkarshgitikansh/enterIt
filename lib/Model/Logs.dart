@@ -26,21 +26,26 @@ class _LogsState extends State<Logs> {
 
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: (!globals.night) ? Color(0xff243447) : Color(0xffffffff) ,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-                leading: Icon(Icons.account_circle,  color: Color(0xff4a4e4d),),
-                title: Text('Customer', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff4a4e4d))),
-                subtitle: Text(globals.isLoggedIn, style: TextStyle(color: Color(0xff4a4e4d)))
+                leading: Icon(Icons.account_circle,  color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d),),
+                title: Text('Customer', style: TextStyle(fontWeight: FontWeight.w500, color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d))),
+                subtitle: Text(globals.isLoggedIn, style: TextStyle(color:(!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)))
             ),
             ListTile(
-                leading: Icon(Icons.access_time,  color: Color(0xff4a4e4d)),
-                title: Text('Last login', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff4a4e4d))),
-                subtitle: Text(globals.loginTime, style: TextStyle(color: Color(0xff4a4e4d)))
+                leading: Icon(Icons.access_time,  color:(!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
+                title: Text('Last login', style: TextStyle(fontWeight: FontWeight.w500, color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d))),
+                subtitle: Text(globals.loginTime, style: TextStyle(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)))
+            ),
+            ListTile(
+                leading: Icon(Icons.assignment_turned_in,  color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)),
+                title: Text('Total inventory', style: TextStyle(fontWeight: FontWeight.w500, color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d))),
+                subtitle: Text((globals.filter.length-1).toString(), style: TextStyle(color:(!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d)))
             ),
 //        ListTile(
 //            leading: Icon(Icons.access_time),
@@ -51,7 +56,7 @@ class _LogsState extends State<Logs> {
             SizedBox(height: 50),
 
             RaisedButton(
-              color: Color(0xff0392cf),
+              color: (!globals.night) ? Color(0xff141d26) : Color(0xff0392cf),
               child: Text(
                 'Log out',
                 style: TextStyle(
@@ -78,13 +83,14 @@ class _LogsState extends State<Logs> {
           ],
         ),
       ),
-//      bottomNavigationBar: Container(
-//
-//          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-//
-//          child: Text('@utkarshgitikansh', textAlign: TextAlign.center,  style: TextStyle(color: Colors.brown, fontSize: 16),)
-//
-//      ),
+      bottomNavigationBar: Container(
+
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+
+          child: Text('@utkarshgitikansh', textAlign: TextAlign.center,
+            style: TextStyle(color: (!globals.night) ? Color(0xffffffff) : Color(0xff4a4e4d), fontSize: 16),)
+
+      ),
 
     );
 

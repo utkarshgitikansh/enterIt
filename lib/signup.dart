@@ -2,6 +2,7 @@ import 'package:enterit/invent.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:enterit/Model/globals.dart' as globals;
 
 class Signup extends StatefulWidget {
   @override
@@ -47,7 +48,7 @@ class _SignupState extends State<Signup> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor:  Color(0xff0392cf),
+            backgroundColor: globals.night ? Color(0xff0392cf) : Color(0xff141d26),
             textColor: Colors.white,
             fontSize: 16.0
 
@@ -65,7 +66,7 @@ class _SignupState extends State<Signup> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor:  Color(0xff0392cf),
+            backgroundColor: globals.night ? Color(0xff0392cf) : Color(0xff141d26),
             textColor: Colors.white,
             fontSize: 16.0
 
